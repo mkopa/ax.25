@@ -1,0 +1,49 @@
+{
+  "name": "ax.25",
+  "version": "1.0.0",
+  "description": "AX.25 packet encoder and decoder library",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js --mode=production",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "serve ./docs",
+    "format": "prettier --write \"./src/**/*.ts\" \"./webpack.config.js\"",
+    "postinstall": "npm-install-peers"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkopa/ax.25.git"
+  },
+  "keywords": [
+    "ax25",
+    "ax.25",
+    "packet",
+    "radio"
+  ],
+  "author": "Marcin Kopa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mkopa/ax.25/issues"
+  },
+  "homepage": "https://github.com/mkopa/ax.25#readme",
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0",
+    "eslint": "^8.38.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "npm-install-peers": "^1.2.2",
+    "prettier": "^2.8.7",
+    "terser-webpack-plugin": "^5.3.7",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.4",
+    "webpack": "^5.78.0",
+    "webpack-cli": "^5.0.1"
+  }
+}
