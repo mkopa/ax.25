@@ -6,7 +6,6 @@
   "scripts": {
     "build": "webpack --config webpack.config.js --mode=production",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "serve ./docs",
     "format": "prettier --write \"./src/**/*.ts\" \"./webpack.config.js\"",
     "postinstall": "npm-install-peers"
   },
