@@ -8,13 +8,15 @@
       "allowJs": true,
       "moduleResolution": "node",
       "declaration": true,
-      "sourceMap": true
+      "sourceMap": true,
+      "esModuleInterop": true
     },
-    "include": [
-      "src/**/*"
-    ],
+    "include": ["src/**/*", "example"    ],
     "exclude": [
       "node_modules",
       "**/*.spec.ts"
-    ]
+    ],
+    "ts-node": {
+      "esm": true 
+    },
   }

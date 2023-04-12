@@ -97,6 +97,10 @@ export class AX25Packet {
     }
   ) {}
 
+  public getAX25Frame() {
+    return this.properties;
+  }
+
   public get destinationCallsign(): string {
     if (!utils.testCallsign(this.properties.destinationCallsign)) {
       throw "ax25.Packet: Invalid destination callsign.";
@@ -167,16 +171,12 @@ export class AX25Packet {
       throw msg;
     for (var r = 0; r < repeaters.length; r++) {
       if (
-        !repeaters[r].hasOwnProperty("callsign") ||
-        !utils.testCallsign(repeaters[r].callsign)
+        !repeaters[r]!.hasOwnProperty("callsign") ||
+        !utils.testCallsign(repeaters[r]!.callsign)
       ) {
         throw msg;
       }
-      if (
-        !repeaters[r].hasOwnProperty("ssid") ||
-        repeaters[r].ssid < 0 ||
-        repeaters[r].ssid > 15
-      ) {
+      if (!repeaters[r] || repeaters[r]!.ssid < 0 || repeaters[r]!.ssid > 15) {
         throw msg;
       }
     }
@@ -331,7 +331,9 @@ export class AX25Packet {
     // Address Field: Destination subfield
     const field = frame.splice(0, 6);
     for (let f = 0; f < field.length; f++)
-      this.properties.destinationCallsign += String.fromCharCode(field[f] >> 1);
+      this.properties.destinationCallsign += String.fromCharCode(
+        (field[f] as number) >> 1
+      );
     const _field = frame.shift();
     this.properties.destinationSSID =
       ((_field as number) & AX25Defs.A_SSID) >> 1;
@@ -340,7 +342,9 @@ export class AX25Packet {
     // Address Field: Source subfield
     const fieldCALL = frame.splice(0, 6);
     for (let f = 0; f < fieldCALL.length; f++)
-      this.properties.sourceCallsign += String.fromCharCode(fieldCALL[f] >> 1);
+      this.properties.sourceCallsign += String.fromCharCode(
+        (fieldCALL[f] as number) >> 1
+      );
     const fieldSSID = frame.shift();
     this.properties.sourceSSID = ((fieldSSID as number) & AX25Defs.A_SSID) >> 1;
 
@@ -353,7 +357,9 @@ export class AX25Packet {
         ssid: 0,
       };
       for (var f = 0; f < field.length; f++)
-        repeater.callsign += String.fromCharCode(repeaterFieldArr[f] >> 1);
+        repeater.callsign += String.fromCharCode(
+          (repeaterFieldArr[f] as number) >> 1
+        );
       repeaterField = frame.shift() as number;
       repeater.ssid = (repeaterField & AX25Defs.A_SSID) >> 1;
       this.properties.repeaterPath.push(repeater);
@@ -427,7 +433,7 @@ export class AX25Packet {
     for (let c = 0; c < 6; c++) {
       frame.push(
         (this.properties.destinationCallsign.length - 1 >= c
-          ? this.properties.destinationCallsign[c].charCodeAt(0)
+          ? (this.properties.destinationCallsign[c] as string).charCodeAt(0)
           : 32) << 1
       );
     }
@@ -441,7 +447,7 @@ export class AX25Packet {
     for (let c = 0; c < 6; c++) {
       frame.push(
         (this.properties.sourceCallsign.length - 1 >= c
-          ? this.properties.sourceCallsign[c].charCodeAt(0)
+          ? (this.properties.sourceCallsign[c] as string).charCodeAt(0)
           : 32) << 1
       );
     }
@@ -457,13 +463,19 @@ export class AX25Packet {
     for (let r = 0; r < this.properties.repeaterPath.length; r++) {
       for (let c = 0; c < 6; c++) {
         frame.push(
-          (this.properties.repeaterPath[r].callsign.length - 1 >= c
-            ? this.properties.repeaterPath[r].callsign[c].charCodeAt(0)
+          ((this.properties.repeaterPath[r] as RepeaterPath).callsign.length -
+            1 >=
+          c
+            ? (
+                (this.properties.repeaterPath[r] as RepeaterPath).callsign[
+                  c
+                ] as string
+              ).charCodeAt(0)
             : 32) << 1
         );
       }
       frame.push(
-        (this.properties.repeaterPath[r].ssid << 1) |
+        ((this.properties.repeaterPath[r] as RepeaterPath).ssid << 1) |
           (r == this.properties.repeaterPath.length - 1 ? 1 : 0)
       );
     }
@@ -493,7 +505,7 @@ export class AX25Packet {
         this.properties.type == AX25Defs.U_FRAME_TEST)
     ) {
       for (let i = 0; i < this.properties.info.length; i++)
-        frame.push(this.properties.info[i]);
+        frame.push(this.properties.info[i] as number);
     }
 
     return frame;

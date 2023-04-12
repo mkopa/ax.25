@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js --mode=production",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "webpack --config webpack.config.dev.js --mode=production && node dist/index.js",
     "format": "prettier --write \"./src/**/*.ts\" \"./webpack.config.js\"",
     "postinstall": "npm-install-peers"
   },
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/mkopa/ax.25#readme",
   "devDependencies": {
+    "@tsconfig/node-lts-strictest-esm": "^18.12.1",
     "clean-webpack-plugin": "^4.0.0",
     "eslint": "^8.38.0",
     "eslint-config-airbnb": "^19.0.4",
