@@ -19,7 +19,11 @@ const ax25Frame: AX25Frame = {
   nr: 0,
   ns: 0,
   pid: AX25Defs.PID_NONE,
-  info: Array.from(encoding.encode("Siema!")),
+  info: Array.from(
+    encoding.encode(
+      "N0CALL>FD0W03,SR4BI,WIDE1*:`3&l \u001c-\\`op Marcin QTH Bialystok FTM-300 QRG 144.500_1"
+    )
+  ),
   sent: false,
   modulo128: false,
 };
